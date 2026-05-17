@@ -6,12 +6,36 @@ def show_menu():
     print("2. Exit")
 
 
+def count_lines(text):
+    lines = text.splitlines()
+
+    if len(lines) == 0:
+        return 1
+
+    return len(lines)
+
+
+def count_words(text):
+    words = text.split()
+    return len(words)
+
+
+def count_characters(text):
+    return len(text)
+
+
 def analyze_direct_text():
     print("\nEnter your text:")
     text = input("> ")
 
-    print("\nYou entered:")
-    print(text)
+    line_count = count_lines(text)
+    word_count = count_words(text)
+    character_count = count_characters(text)
+
+    print("\n===== Analysis Result =====")
+    print(f"Lines: {line_count}")
+    print(f"Words: {word_count}")
+    print(f"Characters: {character_count}")
 
 
 def main():

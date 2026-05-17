@@ -8,8 +8,10 @@ The project is built step by step while learning Python fundamentals.
 
 - Simple command-line menu
 - Direct text input from the user
-- Basic program loop
-- Input validation
+- Count lines
+- Count words
+- Count characters
+- Basic input validation
 
 ## Concepts Practiced
 
@@ -18,7 +20,12 @@ The project is built step by step while learning Python fundamentals.
 - User input
 - While loop
 - If / elif / else conditions
-- Basic program structure
+- String methods
+- `len()`
+- `split()`
+- `splitlines()`
+- Return values
+- f-strings
 
 ## How to Run
 
