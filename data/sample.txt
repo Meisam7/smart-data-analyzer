@@ -1,0 +1,4 @@
+Python is useful for text analysis.
+Python can read files.
+Python can count words, lines, and characters.
+This project helps me learn Python step by step.

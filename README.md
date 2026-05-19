@@ -8,10 +8,11 @@ The project is built step by step while learning Python fundamentals.
 
 - Simple command-line menu
 - Direct text input from the user
+- Read text from `.txt` files
 - Count lines
 - Count words
 - Count characters
-- Basic input validation
+- Basic error handling for missing files
 
 ## Concepts Practiced
 
@@ -26,8 +27,26 @@ The project is built step by step while learning Python fundamentals.
 - `splitlines()`
 - Return values
 - f-strings
+- - File reading
+- `open()`
+- `read()`
+- `close()`
+- `try / except`
+- `FileNotFoundError`
+- Function reuse
 
 ## How to Run
 
+Run the program:
+
 ```bash
 python main.py
+```
+
+### Example File Test
+
+Choose option `2` and enter:
+
+```text
+data/sample.txt
+```
