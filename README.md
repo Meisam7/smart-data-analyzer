@@ -13,6 +13,8 @@ The project is built step by step while learning Python fundamentals.
 - Count words
 - Count characters
 - Basic error handling for missing files
+- - Find the most common words
+- Clean words by removing punctuation
 
 ## Concepts Practiced
 
@@ -34,6 +36,13 @@ The project is built step by step while learning Python fundamentals.
 - `try / except`
 - `FileNotFoundError`
 - Function reuse
+- - Lists
+- Dictionaries
+- Tuples
+- Sorting
+- Lambda function
+- For loops
+- String cleaning
 
 ## How to Run
 
