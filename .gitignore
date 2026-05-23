@@ -1,5 +1,6 @@
 .venv/
 __pycache__/
 *.pyc
-data/*_result.json
 data/result.json
+data/*_result.json
+analysis.db

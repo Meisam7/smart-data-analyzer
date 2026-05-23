@@ -18,6 +18,8 @@ The project is built step by step while learning Python fundamentals.
 - - Extract email addresses
 - Extract URLs
 - Save analysis result as a JSON file
+- - Store analysis history in SQLite database
+- Show previous analysis history
 
 ## Concepts Practiced
 
@@ -55,6 +57,14 @@ The project is built step by step while learning Python fundamentals.
 - `json.dump()`
 - Writing files
 - Result dictionaries
+- - SQLite
+- `import sqlite3`
+- Database connection
+- SQL `CREATE TABLE`
+- SQL `INSERT`
+- SQL `SELECT`
+- `fetchall()`
+- Date and time with `datetime`
 
 ## How to Run
 

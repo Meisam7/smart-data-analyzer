@@ -1,5 +1,7 @@
 import re
 import json
+import sqlite3
+from datetime import datetime
 
 
 def show_menu():
@@ -8,7 +10,8 @@ def show_menu():
     print("==============================")
     print("1. Analyze direct text")
     print("2. Analyze text file")
-    print("3. Exit")
+    print("3. Show analysis history")
+    print("4. Exit")
 
 
 def count_lines(text):
@@ -30,19 +33,12 @@ def count_characters(text):
 
 
 def clean_word(word):
-    """
-    Clean one word by removing punctuation and converting it to lowercase.
-    Example: 'Python!' becomes 'python'
-    """
     cleaned = word.strip(".,!?;:()[]{}\"'")
     cleaned = cleaned.lower()
     return cleaned
 
 
 def get_words(text):
-    """
-    Convert text into a list of clean words.
-    """
     raw_words = text.split()
     clean_words = []
 
@@ -56,9 +52,6 @@ def get_words(text):
 
 
 def get_most_common_words(text, limit=10):
-    """
-    Count words using a dictionary and return the most common words.
-    """
     words = get_words(text)
     word_counts = {}
 
@@ -75,28 +68,18 @@ def get_most_common_words(text, limit=10):
 
 
 def find_emails(text):
-    """
-    Find email addresses inside text using regex.
-    """
     email_pattern = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
     emails = re.findall(email_pattern, text)
     return emails
 
 
 def find_urls(text):
-    """
-    Find URLs inside text using regex.
-    """
     url_pattern = r"https?://[^\s]+"
     urls = re.findall(url_pattern, text)
     return urls
 
 
 def create_result_dictionary(line_count, word_count, character_count, common_words, emails, urls):
-    """
-    Create one dictionary that contains all analysis results.
-    This makes it easy to print or save the result.
-    """
     result = {
         "line_count": line_count,
         "word_count": word_count,
@@ -135,9 +118,6 @@ def print_result(result):
 
 
 def save_result_as_json(result, output_path):
-    """
-    Save analysis result as a JSON file.
-    """
     file = open(output_path, "w", encoding="utf-8")
     json.dump(result, file, indent=4)
     file.close()
@@ -154,7 +134,89 @@ def ask_to_save_json(result):
         print("Result was not saved.")
 
 
-def analyze_text(text):
+def create_database():
+    connection = sqlite3.connect("analysis.db")
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS analyses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source_type TEXT NOT NULL,
+            source_name TEXT NOT NULL,
+            line_count INTEGER,
+            word_count INTEGER,
+            character_count INTEGER,
+            created_at TEXT NOT NULL
+        )
+    """)
+
+    connection.commit()
+    connection.close()
+
+
+def save_analysis_to_database(source_type, source_name, result):
+    connection = sqlite3.connect("analysis.db")
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        INSERT INTO analyses (
+            source_type,
+            source_name,
+            line_count,
+            word_count,
+            character_count,
+            created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        source_type,
+        source_name,
+        result["line_count"],
+        result["word_count"],
+        result["character_count"],
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ))
+
+    connection.commit()
+    connection.close()
+
+
+def show_analysis_history():
+    connection = sqlite3.connect("analysis.db")
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT id, source_type, source_name, line_count, word_count, character_count, created_at
+        FROM analyses
+        ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+    connection.close()
+
+    print("\n===== Analysis History =====")
+
+    if len(rows) == 0:
+        print("No analysis history found.")
+        return
+
+    for row in rows:
+        analysis_id = row[0]
+        source_type = row[1]
+        source_name = row[2]
+        line_count = row[3]
+        word_count = row[4]
+        character_count = row[5]
+        created_at = row[6]
+
+        print(
+            f"{analysis_id}. [{source_type}] {source_name} | "
+            f"Lines: {line_count}, Words: {word_count}, Characters: {character_count} | "
+            f"{created_at}"
+        )
+
+
+def analyze_text(text, source_type, source_name):
     line_count = count_lines(text)
     word_count = count_words(text)
     character_count = count_characters(text)
@@ -172,6 +234,7 @@ def analyze_text(text):
     )
 
     print_result(result)
+    save_analysis_to_database(source_type, source_name, result)
     ask_to_save_json(result)
 
 
@@ -179,7 +242,7 @@ def analyze_direct_text():
     print("\nEnter your text:")
     text = input("> ")
 
-    analyze_text(text)
+    analyze_text(text, "direct_text", "user_input")
 
 
 def read_text_file(file_path):
@@ -195,7 +258,7 @@ def analyze_text_file():
 
     try:
         text = read_text_file(file_path)
-        analyze_text(text)
+        analyze_text(text, "file", file_path)
     except FileNotFoundError:
         print("Error: File not found. Please check the file path.")
     except Exception as error:
@@ -203,6 +266,8 @@ def analyze_text_file():
 
 
 def main():
+    create_database()
+
     while True:
         show_menu()
         choice = input("Choose an option: ").strip()
@@ -212,10 +277,12 @@ def main():
         elif choice == "2":
             analyze_text_file()
         elif choice == "3":
+            show_analysis_history()
+        elif choice == "4":
             print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please choose 1, 2, or 3.")
+            print("Invalid choice. Please choose 1, 2, 3, or 4.")
 
 
 if __name__ == "__main__":
