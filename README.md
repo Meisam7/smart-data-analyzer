@@ -17,6 +17,7 @@ The project is built step by step while learning Python fundamentals.
 - Clean words by removing punctuation
 - - Extract email addresses
 - Extract URLs
+- Save analysis result as a JSON file
 
 ## Concepts Practiced
 
@@ -49,6 +50,11 @@ The project is built step by step while learning Python fundamentals.
 - `import re`
 - `re.findall()`
 - Regex patterns
+- - JSON
+- `import json`
+- `json.dump()`
+- Writing files
+- Result dictionaries
 
 ## How to Run
 

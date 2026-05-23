@@ -1,4 +1,5 @@
 import re
+import json
 
 
 def show_menu():
@@ -91,29 +92,66 @@ def find_urls(text):
     return urls
 
 
-def print_result(line_count, word_count, character_count, common_words, emails, urls):
+def create_result_dictionary(line_count, word_count, character_count, common_words, emails, urls):
+    """
+    Create one dictionary that contains all analysis results.
+    This makes it easy to print or save the result.
+    """
+    result = {
+        "line_count": line_count,
+        "word_count": word_count,
+        "character_count": character_count,
+        "most_common_words": common_words,
+        "emails": emails,
+        "urls": urls
+    }
+
+    return result
+
+
+def print_result(result):
     print("\n===== Analysis Result =====")
-    print(f"Lines: {line_count}")
-    print(f"Words: {word_count}")
-    print(f"Characters: {character_count}")
+    print(f"Lines: {result['line_count']}")
+    print(f"Words: {result['word_count']}")
+    print(f"Characters: {result['character_count']}")
 
     print("\nMost common words:")
-    for word, count in common_words:
+    for word, count in result["most_common_words"]:
         print(f"- {word}: {count}")
 
     print("\nEmails found:")
-    if len(emails) > 0:
-        for email in emails:
+    if len(result["emails"]) > 0:
+        for email in result["emails"]:
             print(f"- {email}")
     else:
         print("No emails found.")
 
     print("\nURLs found:")
-    if len(urls) > 0:
-        for url in urls:
+    if len(result["urls"]) > 0:
+        for url in result["urls"]:
             print(f"- {url}")
     else:
         print("No URLs found.")
+
+
+def save_result_as_json(result, output_path):
+    """
+    Save analysis result as a JSON file.
+    """
+    file = open(output_path, "w", encoding="utf-8")
+    json.dump(result, file, indent=4)
+    file.close()
+
+
+def ask_to_save_json(result):
+    choice = input("\nDo you want to save the result as JSON? (y/n): ").strip().lower()
+
+    if choice == "y":
+        output_path = input("Enter output file path, for example data/result.json: ").strip()
+        save_result_as_json(result, output_path)
+        print(f"Result saved to {output_path}")
+    else:
+        print("Result was not saved.")
 
 
 def analyze_text(text):
@@ -124,7 +162,7 @@ def analyze_text(text):
     emails = find_emails(text)
     urls = find_urls(text)
 
-    print_result(
+    result = create_result_dictionary(
         line_count,
         word_count,
         character_count,
@@ -132,6 +170,9 @@ def analyze_text(text):
         emails,
         urls
     )
+
+    print_result(result)
+    ask_to_save_json(result)
 
 
 def analyze_direct_text():
