@@ -20,6 +20,7 @@ The project is built step by step while learning Python fundamentals.
 - Save analysis result as a JSON file
 - - Store analysis history in SQLite database
 - Show previous analysis history
+- Create word-frequency chart
 
 ## Concepts Practiced
 
@@ -65,10 +66,20 @@ The project is built step by step while learning Python fundamentals.
 - SQL `SELECT`
 - `fetchall()`
 - Date and time with `datetime`
+- Data visualization
+- `matplotlib`
+- Bar charts
+- Saving figures
 
 ## How to Run
 
-Run the program:
+First install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then run the program:
 
 ```bash
 python main.py
@@ -81,3 +92,16 @@ Choose option `2` and enter:
 ```text
 data/sample.txt
 ```
+
+## Project Roadmap
+
+- Basic menu and direct text input ✅
+- Basic text analysis: lines, words, and characters ✅
+- Text file analysis ✅
+- Most common word analysis ✅
+- Email and URL extraction with regular expressions ✅
+- JSON export for analysis results ✅
+- SQLite database history ✅
+- Data visualization with charts ✅
+- Web page text analysis
+- Project refactoring into multiple files

@@ -4,3 +4,4 @@ __pycache__/
 data/result.json
 data/*_result.json
 analysis.db
+reports/*.png

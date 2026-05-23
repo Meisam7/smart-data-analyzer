@@ -2,6 +2,7 @@ import re
 import json
 import sqlite3
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 
 def show_menu():
@@ -134,6 +135,42 @@ def ask_to_save_json(result):
         print("Result was not saved.")
 
 
+def create_word_frequency_chart(common_words, output_path):
+    """
+    Create and save a bar chart for the most common words.
+    """
+    if len(common_words) == 0:
+        print("No words available for chart.")
+        return
+
+    words = []
+    counts = []
+
+    for word, count in common_words:
+        words.append(word)
+        counts.append(count)
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(words, counts)
+    plt.title("Most Common Words")
+    plt.xlabel("Words")
+    plt.ylabel("Frequency")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig(output_path)
+    plt.close()
+
+
+def ask_to_create_chart(result):
+    choice = input("\nDo you want to create a word-frequency chart? (y/n): ").strip().lower()
+
+    if choice == "y":
+        output_path = input("Enter chart file path, for example reports/word_frequency.png: ").strip()
+        create_word_frequency_chart(result["most_common_words"], output_path)
+        print(f"Chart saved to {output_path}")
+    else:
+        print("Chart was not created.")
+
 def create_database():
     connection = sqlite3.connect("analysis.db")
     cursor = connection.cursor()
@@ -236,6 +273,7 @@ def analyze_text(text, source_type, source_name):
     print_result(result)
     save_analysis_to_database(source_type, source_name, result)
     ask_to_save_json(result)
+    ask_to_create_chart(result)
 
 
 def analyze_direct_text():
