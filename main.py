@@ -1,3 +1,6 @@
+import re
+
+
 def show_menu():
     print("\n==============================")
     print("Smart Data Analyzer")
@@ -64,19 +67,31 @@ def get_most_common_words(text, limit=10):
         else:
             word_counts[word] = word_counts[word] + 1
 
-    # Convert dictionary to list of tuples:
-    # {'python': 3, 'data': 2}
-    # becomes:
-    # [('python', 3), ('data', 2)]
     word_items = list(word_counts.items())
-
-    # Sort by count, from highest to lowest
     word_items.sort(key=lambda item: item[1], reverse=True)
 
     return word_items[:limit]
 
 
-def print_result(line_count, word_count, character_count, common_words):
+def find_emails(text):
+    """
+    Find email addresses inside text using regex.
+    """
+    email_pattern = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
+    emails = re.findall(email_pattern, text)
+    return emails
+
+
+def find_urls(text):
+    """
+    Find URLs inside text using regex.
+    """
+    url_pattern = r"https?://[^\s]+"
+    urls = re.findall(url_pattern, text)
+    return urls
+
+
+def print_result(line_count, word_count, character_count, common_words, emails, urls):
     print("\n===== Analysis Result =====")
     print(f"Lines: {line_count}")
     print(f"Words: {word_count}")
@@ -86,14 +101,37 @@ def print_result(line_count, word_count, character_count, common_words):
     for word, count in common_words:
         print(f"- {word}: {count}")
 
+    print("\nEmails found:")
+    if len(emails) > 0:
+        for email in emails:
+            print(f"- {email}")
+    else:
+        print("No emails found.")
+
+    print("\nURLs found:")
+    if len(urls) > 0:
+        for url in urls:
+            print(f"- {url}")
+    else:
+        print("No URLs found.")
+
 
 def analyze_text(text):
     line_count = count_lines(text)
     word_count = count_words(text)
     character_count = count_characters(text)
     common_words = get_most_common_words(text)
+    emails = find_emails(text)
+    urls = find_urls(text)
 
-    print_result(line_count, word_count, character_count, common_words)
+    print_result(
+        line_count,
+        word_count,
+        character_count,
+        common_words,
+        emails,
+        urls
+    )
 
 
 def analyze_direct_text():

@@ -15,6 +15,8 @@ The project is built step by step while learning Python fundamentals.
 - Basic error handling for missing files
 - - Find the most common words
 - Clean words by removing punctuation
+- - Extract email addresses
+- Extract URLs
 
 ## Concepts Practiced
 
@@ -43,6 +45,10 @@ The project is built step by step while learning Python fundamentals.
 - Lambda function
 - For loops
 - String cleaning
+- - Regular expressions
+- `import re`
+- `re.findall()`
+- Regex patterns
 
 ## How to Run
 

@@ -2,3 +2,7 @@ Python is useful for text analysis.
 Python can read files.
 Python can count words, lines, and characters.
 This project helps me learn Python step by step.
+
+Contact: student@example.com
+Website: https://www.py4e.com/
+GitHub: https://github.com/
