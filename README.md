@@ -22,6 +22,7 @@ The project is built step by step while learning Python fundamentals.
 - Show previous analysis history
 - Create word-frequency chart
 - Analyze text from web pages
+- Organized code into multiple modules
 
 ## Concepts Practiced
 
@@ -77,6 +78,11 @@ The project is built step by step while learning Python fundamentals.
 - HTML parsing
 - `BeautifulSoup`
 - Network error handling
+- Python modules
+- Packages
+- Imports
+- Code organization
+- Project structure
 
 ## How to Run
 
@@ -110,5 +116,5 @@ data/sample.txt
 - JSON export for analysis results ✅
 - SQLite database history ✅
 - Data visualization with charts ✅
-- Project refactoring into multiple files
+- Project refactoring into multiple files ✅
 - Web page text analysis ✅
