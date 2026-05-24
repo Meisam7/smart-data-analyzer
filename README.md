@@ -2,7 +2,7 @@
 
 Smart Data Analyzer is a beginner-friendly Python project for analyzing text data.
 
-The project is built step by step while learning Python fundamentals.
+The project was built step by step while practicing Python fundamentals from basic programming concepts to file handling, regular expressions, web scraping, SQLite databases, data visualization, and project structure.
 
 ## Current Features
 
@@ -12,24 +12,24 @@ The project is built step by step while learning Python fundamentals.
 - Count lines
 - Count words
 - Count characters
-- Basic error handling for missing files
-- - Find the most common words
+- Find the most common words
 - Clean words by removing punctuation
-- - Extract email addresses
+- Extract email addresses
 - Extract URLs
-- Save analysis result as a JSON file
-- - Store analysis history in SQLite database
+- Save analysis results as a JSON file
+- Store analysis history in a SQLite database
 - Show previous analysis history
-- Create word-frequency chart
+- Create word-frequency charts
 - Analyze text from web pages
 - Organized code into multiple modules
+- Basic error handling for missing files and network errors
 
 ## Concepts Practiced
 
 - Functions
 - Variables
 - User input
-- While loop
+- While loops
 - If / elif / else conditions
 - String methods
 - `len()`
@@ -37,30 +37,30 @@ The project is built step by step while learning Python fundamentals.
 - `splitlines()`
 - Return values
 - f-strings
-- - File reading
+- File reading
 - `open()`
 - `read()`
 - `close()`
 - `try / except`
 - `FileNotFoundError`
 - Function reuse
-- - Lists
+- Lists
 - Dictionaries
 - Tuples
 - Sorting
-- Lambda function
+- Lambda functions
 - For loops
 - String cleaning
-- - Regular expressions
+- Regular expressions
 - `import re`
 - `re.findall()`
 - Regex patterns
-- - JSON
+- JSON
 - `import json`
 - `json.dump()`
 - Writing files
 - Result dictionaries
-- - SQLite
+- SQLite
 - `import sqlite3`
 - Database connection
 - SQL `CREATE TABLE`
@@ -84,26 +84,117 @@ The project is built step by step while learning Python fundamentals.
 - Code organization
 - Project structure
 
-## How to Run
+## Project Structure
 
-First install dependencies:
+```text
+smart-data-analyzer/
+│
+├── main.py
+├── README.md
+├── requirements.txt
+├── .gitignore
+│
+├── data/
+│   └── sample.txt
+│
+├── reports/
+│
+├── analyzers/
+│   ├── __init__.py
+│   ├── text_analyzer.py
+│   ├── file_handler.py
+│   ├── web_analyzer.py
+│   └── visualizer.py
+│
+└── database/
+    ├── __init__.py
+    └── db_manager.py
+```
+
+## Requirements
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Then run the program:
+## How to Run
+
+Run the program:
 
 ```bash
 python main.py
 ```
 
-### Example File Test
+After running the program, you will see a menu like this:
+
+```text
+==============================
+Smart Data Analyzer
+==============================
+1. Analyze direct text
+2. Analyze text file
+3. Analyze web page
+4. Show analysis history
+5. Exit
+```
+
+## Example File Test
 
 Choose option `2` and enter:
 
 ```text
 data/sample.txt
+```
+
+The program will analyze the file and show:
+
+- Number of lines
+- Number of words
+- Number of characters
+- Most common words
+- Emails found
+- URLs found
+
+## Example JSON Export
+
+After analysis, the program asks:
+
+```text
+Do you want to save the result as JSON? (y/n):
+```
+
+Enter:
+
+```text
+y
+```
+
+Then enter an output path, for example:
+
+```text
+data/result.json
+```
+
+## Example Chart Export
+
+After analysis, the program asks:
+
+```text
+Do you want to create a word-frequency chart? (y/n):
+```
+
+Enter:
+
+```text
+y
+```
+
+Then enter an output path, for example:
+
+```text
+reports/word_frequency.png
 ```
 
 ## Project Roadmap
@@ -116,5 +207,11 @@ data/sample.txt
 - JSON export for analysis results ✅
 - SQLite database history ✅
 - Data visualization with charts ✅
-- Project refactoring into multiple files ✅
 - Web page text analysis ✅
+- Project refactoring into multiple files ✅
+
+## Notes
+
+Generated output files such as JSON results, SQLite database files, and chart images are ignored by Git using `.gitignore`.
+
+The project is designed as a learning project, so the code is intentionally simple and readable.
