@@ -2,6 +2,8 @@ import re
 import json
 import sqlite3
 from datetime import datetime
+import requests
+from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 
 
@@ -11,8 +13,9 @@ def show_menu():
     print("==============================")
     print("1. Analyze direct text")
     print("2. Analyze text file")
-    print("3. Show analysis history")
-    print("4. Exit")
+    print("3. Analyze web page")
+    print("4. Show analysis history")
+    print("5. Exit")
 
 
 def count_lines(text):
@@ -303,24 +306,54 @@ def analyze_text_file():
         print(f"Unexpected error: {error}")
 
 
+def get_web_page_text(url):
+    """
+    Download a web page and extract readable text from HTML.
+    """
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    for tag in soup(["script", "style"]):
+        tag.decompose()
+
+    text = soup.get_text(separator=" ", strip=True)
+    return text
+
+
+def analyze_web_page():
+    url = input("\nEnter web page URL: ").strip()
+
+    try:
+        text = get_web_page_text(url)
+        analyze_text(text, "web", url)
+    except requests.exceptions.RequestException as error:
+        print(f"Network error: {error}")
+    except Exception as error:
+        print(f"Unexpected error: {error}")
+
+
 def main():
     create_database()
 
     while True:
         show_menu()
         choice = input("Choose an option: ").strip()
-
+        
         if choice == "1":
             analyze_direct_text()
         elif choice == "2":
             analyze_text_file()
         elif choice == "3":
-            show_analysis_history()
+            analyze_web_page()
         elif choice == "4":
+            show_analysis_history()
+        elif choice == "5":
             print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please choose 1, 2, 3, or 4.")
+            print("Invalid choice. Please choose 1, 2, 3, 4, or 5.")
 
 
 if __name__ == "__main__":

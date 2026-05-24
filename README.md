@@ -21,6 +21,7 @@ The project is built step by step while learning Python fundamentals.
 - - Store analysis history in SQLite database
 - Show previous analysis history
 - Create word-frequency chart
+- Analyze text from web pages
 
 ## Concepts Practiced
 
@@ -70,6 +71,12 @@ The project is built step by step while learning Python fundamentals.
 - `matplotlib`
 - Bar charts
 - Saving figures
+- HTTP requests
+- `requests`
+- Web scraping
+- HTML parsing
+- `BeautifulSoup`
+- Network error handling
 
 ## How to Run
 
@@ -103,5 +110,5 @@ data/sample.txt
 - JSON export for analysis results ✅
 - SQLite database history ✅
 - Data visualization with charts ✅
-- Web page text analysis
 - Project refactoring into multiple files
+- Web page text analysis ✅
